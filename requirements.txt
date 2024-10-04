@@ -1,0 +1,6 @@
+flask
+einsteinpy
+sympy
+numpy
+flask-cors
+waitress
