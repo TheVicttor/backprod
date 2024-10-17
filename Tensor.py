@@ -32,6 +32,12 @@ class Tensor:
     def __init__(self, metric="Schwarzschild"):
         self.__metric = self.__get_metric(metric)
 
+    def __init__(self, metric="KerrNewman"):
+        self.__metric = self.__get_metric(metric)
+    
+    def __init__(self, metric="Kerr"):
+        self.__metric = self.__get_metric(metric)
+
     def __get_metric(self, metric_name):  # noqa: C901
         """Retorna uma metrica prédefinida usando o nome informado."""
         if metric_name == "AlcubierreWarp":
