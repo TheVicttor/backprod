@@ -7,7 +7,7 @@ from waitress import serve
 import numpy as np
 
 # Einsteinpy
-import sympy
+import sympy as sy
 from sympy import symbols, sin, Function, diag
 from einsteinpy.symbolic import (
     MetricTensor,
@@ -92,7 +92,19 @@ class Tensor:
         elif metric_name == "KerrNewman":
             return KerrNewman()
         elif metric_name == "Schwarzschild":
-            return Schwarzschild()
+            syms = sy.symbols("t r theta")
+            t, r, th = syms
+            lamb = Function('lambda')(r)
+            nu = Function('nu')(r)
+
+            # Define o tensor da métrica
+            m = sy.diag(
+                sy.exp(lamb),
+                -(sy.exp(nu)),
+                -r**2,
+                -(r*(sy.sin(th)))**2).tolist()
+                
+            return MetricTensor(m, syms) 
         else:
             raise ValueError("Metrica não implementada.")
 
