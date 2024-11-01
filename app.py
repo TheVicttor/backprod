@@ -98,19 +98,7 @@ class Tensor:
         elif metric_name == "KerrNewman":
             return KerrNewman()
         elif metric_name == "Schwarzschild":
-            syms = sy.symbols("t r theta")
-            t, r, th = syms
-            lamb = Function('lambda')(r)
-            nu = Function('nu')(r)
-
-            # Define o tensor da métrica
-            m = sy.diag(
-                sy.exp(lamb),
-                -(sy.exp(nu)),
-                -r**2,
-                -(r*(sy.sin(th)))**2).tolist()
-                
-            return MetricTensor(m, syms) 
+            return Schwarzschild(c=1)
         else:
             raise ValueError("Metrica não implementada.")
 
