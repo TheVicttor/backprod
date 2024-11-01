@@ -98,7 +98,10 @@ class Tensor:
         elif metric_name == "KerrNewman":
             return KerrNewman()
         elif metric_name == "Schwarzschild":
-            return Schwarzschild(c=1)
+            # Define as constantes simbólicas
+            G, M, c, r = sy.symbols("G M c r")
+            rs = 2 * G * M / c**2  # Define o raio de Schwarzschild com G, M e c
+            return Schwarzschild(c=1, sch=rs)
         else:
             raise ValueError("Metrica não implementada.")
 
