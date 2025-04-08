@@ -14,6 +14,7 @@ from einsteinpy.symbolic import (
     RicciTensor,
     RicciScalar,
     RiemannCurvatureTensor,
+    WeylTensor,
 )
 
 from einsteinpy.symbolic.predefined import Kerr, KerrNewman, Schwarzschild
@@ -120,6 +121,10 @@ class Tensor:
     def get_riemann_tensor(self):
         """Retorna o tensor de Riemann."""
         return str(RiemannCurvatureTensor.from_metric(self.__metric).tensor())
+
+    def get_weyl_tensor(self):
+        """Retorna o tensor de Weyl."""
+        return str(WeylTensor.from_metric(self.__metric).tensor())
 
 if __name__ == "__main__":
     # Iniciando o servidor com o APPLICATION_ROOT configurado
