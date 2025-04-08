@@ -63,6 +63,8 @@ def calcular_tensores():
         result = tensor.get_ricci_tensor()
     elif tipo == "ricciScalar":
         result = tensor.get_ricci_scalar()
+    elif tipo == "weylTensor":
+        result = tensor.get_get_weyl_tensor()
     else:
         return jsonify(error="Tipo de tensor inválido")
 
