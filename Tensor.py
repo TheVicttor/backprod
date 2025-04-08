@@ -3,6 +3,7 @@ from einsteinpy.symbolic import (
     RicciScalar,
     RicciTensor,
     RiemannCurvatureTensor,
+    WeylTensor
 )
 from einsteinpy.symbolic.predefined import (
     AlcubierreWarp,
@@ -130,6 +131,11 @@ class Tensor:
             [[[[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, r_s/(r**2*(r - r_s)), 0, 0], [-r_s/(r**2*(r - r_s)), 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, -r_s/(2*r), 0], [0, 0, 0, 0], [r_s/(2*r), 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, -r_s*sin(theta)**2/(2*r)], [0, 0, 0, 0], [0, 0, 0, 0], [r_s*sin(theta)**2/(2*r), 0, 0, 0]]], [[[0, r_s*c**2*(r - r_s)/r**4, 0, 0], [r_s*c**2*(-r + r_s)/r**4, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, -r_s/(2*r), 0], [0, r_s/(2*r), 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, -r_s*sin(theta)**2/(2*r)], [0, 0, 0, 0], [0, r_s*sin(theta)**2/(2*r), 0, 0]]], [[[0, 0, r_s*c**2*(-r + r_s)/(2*r**4), 0], [0, 0, 0, 0], [r_s*c**2*(r - r_s)/(2*r**4), 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, r_s/(2*r**2*(r - r_s)), 0], [0, -r_s/(2*r**2*(r - r_s)), 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, r_s*sin(theta)**2/r], [0, 0, -r_s*sin(theta)**2/r, 0]]], [[[0, 0, 0, r_s*c**2*(-r + r_s)/(2*r**4)], [0, 0, 0, 0], [0, 0, 0, 0], [r_s*c**2*(r - r_s)/(2*r**4), 0, 0, 0]], [[0, 0, 0, 0], [0, 0, 0, r_s/(2*r**2*(r - r_s))], [0, 0, 0, 0], [0, -r_s/(2*r**2*(r - r_s)), 0, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, -r_s/r], [0, 0, r_s/r, 0]], [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]]]
         """
         return RiemannCurvatureTensor.from_metric(self.__metric).tensor()
+        
+    def get_weyl_tensor(self):
+        """Retorna o tensor de Weyl."""
+
+        return WeylTensor.from_metric(self.__metric).tensor()
 
 
 # if __name__ == '__main__':
