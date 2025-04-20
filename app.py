@@ -65,6 +65,8 @@ def calcular_tensores():
         result = tensor.get_ricci_scalar()
     elif tipo == "weylTensor":
         result = tensor.get_weyl_tensor()
+    elif tipo == "kretschmann":
+        result = tensor.get_kretschmann_scalar()
     else:
         return jsonify(error="Tipo de tensor inválido")
 
@@ -127,6 +129,48 @@ class Tensor:
     def get_weyl_tensor(self):
         """Retorna o tensor de Weyl."""
         return str(WeylTensor.from_metric(self.__metric).tensor())
+    
+    def get_kretschmann_scalar(self, substitutions=None):
+        """
+        Calcula o escalar de Kretschmann: K = R_{abcd} R^{abcd}
+        
+        Args:
+            substitutions (dict): Dicionário opcional com substituições, ex: {c: 1, G: 1}
+        """
+        R = RiemannCurvatureTensor.from_metric(self.__metric)
+        R_down = R.tensor()
+        g_inv = self.__metric.inv()
+        K = 0
+        dim = self.__metric.tensor().shape[0]
+
+        # Contração total dos índices
+        for a in range(dim):
+            for b in range(dim):
+                for c in range(dim):
+                    for d in range(dim):
+                        for e in range(dim):
+                            for f in range(dim):
+                                for g in range(dim):
+                                    for h in range(dim):
+                                        term = (
+                                            g_inv[a, e]
+                                            * g_inv[b, f]
+                                            * g_inv[c, g]
+                                            * g_inv[d, h]
+                                            * R_down[a, b, c, d]
+                                            * R_down[e, f, g, h]
+                                        )
+                                        K += term
+
+        # Substituições opcionais, como c=1, G=1 etc.
+        if substitutions:
+            K = K.subs(substitutions)
+
+        K = sy.trigsimp(sy.simplify(K))
+
+        return str(K)
+
+
 
 if __name__ == "__main__":
     # Iniciando o servidor com o APPLICATION_ROOT configurado
